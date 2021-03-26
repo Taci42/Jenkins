@@ -23,7 +23,7 @@ data2.jobs.each
             stringParam('Age', '30', 'This is a second parameter')
           stringParam('test', '1233430', 'This is a second parameter')
         }
-        label('main')
+        label('master')
         steps {
         downstreamParameterized {
             trigger('downstreamSeedProjectWithParameters') {
