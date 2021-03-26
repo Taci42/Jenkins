@@ -1,0 +1,21 @@
+node {
+    stage('Clone git') {
+        git branch: 'main', url: 'https://github.com/Taci42/Jenkins.git'
+    }
+    stage('Builds') {
+        parallel (
+            a: {
+                node ('master') {
+                    sleep 10
+                    echo "Branch a finished!"
+                }
+            },
+            b: {
+                node ('master') {
+                    sleep 5
+                    echo "Branch b finished!"
+                }
+            }            
+            )
+    }
+}
