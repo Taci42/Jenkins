@@ -7,14 +7,13 @@ def jsonSlurper2 = new JsonSlurper()
 
 //update the filepath with the path of your job.
 
-def jobs = new BufferedReader(new InputStreamReader(new FileInputStream( "/var/lib/jenkins/workspace/testSd/seed2.json"),"UTF-8"))
+def jobs = new BufferedReader(new InputStreamReader(new FileInputStream( "/var/lib/jenkins/workspace/createMultipleSeedJobWithPostBuildAction/seed2.json"),"UTF-8"))
 data2 = jsonSlurper2.parse(jobs)
 def allSJObs = data2.jobs as Object
 data2.jobs.each
   {
     println("Create Job $it.repositoryName")
 
-// here starts create the job
     job("$it.repositoryName") {
         description(' This is the Description of the job.')
   
@@ -25,9 +24,9 @@ data2.jobs.each
           stringParam('test', '1233430', 'This is a second parameter')
         }
         label('main')
-    steps {
+        steps {
         downstreamParameterized {
-            trigger('Project1') {
+            trigger('downstreamSeedProjectWithParameters') {
                 block {
                     buildStepFailure('FAILURE')
                     failure('FAILURE')
@@ -41,6 +40,4 @@ data2.jobs.each
         }
       }
     }
-
-    ////////////here ends create the job
   }
